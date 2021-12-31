@@ -2,26 +2,28 @@
 import speech_recognition as sr
 from gtts import gTTS
 import os
-import playsound
 import time
 from pydub import AudioSegment
 from pydub.playback import play
-
+import os
+import raspi
 r = sr.Recognizer()
 
 def speak(output):
     tts = gTTS(text=output, lang='tr', slow=False)
     tts.save("merhaba.mp3")
-    play(AudioSegment.from_mp3("merhaba.mp3"))
+    os.system("merhaba hulya.mp3")
 
 
 def berkerfunc(input):
-    play(AudioSegment.from_mp3("hulya.mp3"))
+    os.system("omxplayer hulya.mp3")
 
 
 def isimfunc(input):
     speak(f"Memnun oldum {input.lower().split('benim adım')} bende Şengül")
 
+def doldurfunc():
+    raspi.work()
 
 def konus_cevapla(data):
     with sr.Microphone() as source:
@@ -56,10 +58,10 @@ def konus_cevapla(data):
             speak("İnternete bağlanamıyorum")
 
 
-# data = {
+data = {
 
-#     "benim adım": {"voice": "Çok güzel bir isim", "func": "isimfunc"}, "koy": {"voice": "Tabii Hemen Koyuyorum"}, "Berker e": {"voice": "Tabii", "func": "berkerfunc"}, "adın": {"voice": "benim adım şengül"}, "tanıyor musun": {"voice": "Tam emin olamadım adını söylermisin"},
-#     "yaşındasın": {"voice": "Yılbaşında buna cevap vermek yaşlandığımı hatırlatıyor"}, "nasılsın": {"voice": "İyiyim ama alkolü biraz fazla kaçırdım sanırım sen nasılsın"}}
+    "benim adım": {"voice": "Çok güzel bir isim", "func": "isimfunc"}, "koy": {"voice": "Tabii Hemen Koyuyorum",func:"doldurfunc"}, "Berker e": {"voice": "Tabii", "func": "berkerfunc"}, "adın": {"voice": "benim adım şengül"}, "tanıyor musun": {"voice": "Tam emin olamadım adını söylermisin"},
+    "yaşındasın": {"voice": "Yılbaşında buna cevap vermek yaşlandığımı hatırlatıyor"}, "nasılsın": {"voice": "İyiyim ama alkolü biraz fazla kaçırdım sanırım sen nasılsın"}}
 
-# while True:
-#     print(konus_cevapla(data))
+while True:
+    print(konus_cevapla(data))
